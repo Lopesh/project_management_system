@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row project-dashboard">
+    <% @projects.each do |project| %>
+      
+      <div class="card col-md-5  mt-1 card-override">
+        <div class="card-body card-body-override">
+          <strong class="card-title"><%= project.name %></strong>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
