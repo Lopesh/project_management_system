@@ -43,6 +43,7 @@ group :development do
   gem 'faker'
   gem 'devise'
   gem 'cancan'
+  gem 'pry', '~> 0.12.2'
 end
 
 group :test do

@@ -6,7 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-=begin
 if User.all.empty?
   20.times do |user|
     user = User.new({
@@ -19,7 +18,7 @@ if User.all.empty?
     user.save!
   end
 end
-=end
+
 
 
 

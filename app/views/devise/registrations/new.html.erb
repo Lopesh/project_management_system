@@ -16,6 +16,9 @@
               <label for="inputLastName">Last Name</label>
             </div>
             <div class="form-label-group">
+              <%= f.select(:role, User.roles.keys.to_a, {}, { class: 'form-control' }) %>
+            </div>
+            <div class="form-label-group">
               <%= f.email_field :email, id: "emailSignUp", class: "form-control", placeholder: "Email", required: true %>
               <label for="emailSignUp">Email</label>
             </div>

@@ -5,9 +5,10 @@ class Ability
     if user.role == "Admin"
       can :manage, :all
     elsif user.role == "Project Manager"
-      can :create, Project
-    else
-
+      can :create, Task
+      can :show, Project
+    elsif user.role == "Developer"
+      can :show, Project
     end
     # Define abilities for the passed in user here. For example:
     #

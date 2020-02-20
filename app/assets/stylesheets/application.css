@@ -114,6 +114,33 @@ body {
     color: #777;
 }
 
+.task-parent-div{
+    width: 100%;
+}
+
+.task-parent-div > input[type="checkbox"]{
+    vertical-align: middle;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+.task-parent-div > p {
+    width: 80%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.btn-add-project{
+    margin-top: 15px;
+    width: 100%;
+}
+
 .btn-google {
     color: white;
     background-color: #ea4335;

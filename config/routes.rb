@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   root 'projects#index'
   post "/users" => 'users#create'
   resources :projects
-
+  #   resources :users
+  resources :tasks
 end
