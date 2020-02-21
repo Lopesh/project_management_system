@@ -7,6 +7,13 @@ class Ability
     elsif user.role == "Project Manager"
       can :create, Task
       can :show, Project
+      can :create, Project
+      can :destroy, Project do |project|
+        project.created_by == user
+      end
+      can :edit, Project do |project|
+        project.created_by == user
+      end
     elsif user.role == "Developer"
       can :show, Project
     end

@@ -22,9 +22,9 @@
                   </button>
                 </div>
               <% end %>
-              <% if can? :destroy, project %>
+              <% if can? :edit, project %>
                 <div class="col-md-3 text-center">
-                  <button class="btn btn-secondary" style="width: 100%">
+                  <button class="btn btn-secondary edit-project" data-action='edit' data-project-id="<%= project.id %>" title="Delete Project" style="width: 100%">
                     <i class="fa fa-pencil"></i>
                   </button>
                 </div>
@@ -39,14 +39,13 @@
             </div>
           </div>
         </div>
-
       </div>
     <% end %>
   </div>
   <% if can? :create, Project %>
     <div class="row">
       <div class="col-md-12">
-        <button type="button" class="btn btn-success btn-add-project" data-toggle="modal" data-target="#exampleModal"><strong>Add New Project</strong>  </button>
+        <button type="button" class="btn btn-success btn-add-project" data-action='create' data-toggle="modal" data-target="#exampleModal"><strong>Add New Project</strong>  </button>
       </div>
     </div>
 

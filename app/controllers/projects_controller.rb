@@ -1,7 +1,15 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :destroy ]
+  before_action :set_project, only: [:show, :edit, :destroy, :update ]
   def index
     @projects = Project.all
+  end
+
+  def edit
+    respond_to do |format|
+      format.json do
+        render json: { data: { project: @project.to_json }}
+      end
+    end
   end
 
   def create
@@ -13,11 +21,20 @@ class ProjectsController < ApplicationController
     if @project.save
       respond_to do |format|
         format.json do
-          render json: { data: { success: true, project: @project }}
+          render json: { data: { success: true, project: @project.to_json }}
         end
       end
     end
+  end
 
+  def update
+    if @project.update_attributes(name: params["projectName"], description: params["projectDescription"])
+      respond_to do |format|
+        format.json do
+          render json: { data: { success: true }}
+        end
+      end
+    end
   end
 
   def show
