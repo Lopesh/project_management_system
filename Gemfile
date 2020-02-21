@@ -42,6 +42,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'faker'
   gem 'devise'
+  gem 'cancan'
+  gem 'pry', '~> 0.12.2'
 end
 
 group :test do

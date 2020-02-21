@@ -19,8 +19,12 @@
             <input type="checkbox" class="custom-control-input" id="customCheck1">
             <label class="custom-control-label" for="customCheck1">Remember password</label>
           </div>
-          <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+          <button class="btn btn-lg btn-primary btn-block text-uppercase mb-2" type="submit">Sign in</button>
         <% end %>
+        <h6 class="text-center">
+          OR
+        </h6>
+        <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-lg btn-primary btn-block text-uppercase mt-2" %>
       </div>
     </div>
   </div>
