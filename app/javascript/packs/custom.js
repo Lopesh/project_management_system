@@ -6,15 +6,39 @@ $(document).on("click", ".view-project-description", function () {
     projectID = $(this).data('project-id')
     commonAjaxFunction('/projects/'+projectID, 'get', '', function(response, status, xhr){
         project = JSON.parse(response['data']['project'])
-        tasks = JSON.parse(response['data']['tasks'])
+        projectTasks = JSON.parse(response['data']['tasks'])
         modalBody = "<strong>Description: </strong><br/><p>"+project.description+"</p>"
         modalBody += "<strong class='mb-2'>Tasks: </strong><br/>"
-        if(tasks.length > 0){
-            tasks.forEach(function(task, index){
+        priority = ['High', 'Medium', 'Low']
+        if(projectTasks.length > 0){
+            priority.forEach(function(priority){
+                var tasks = projectTasks.filter(e => e.priority == priority)
+                var badgeClass
+                if(priority == "High"){
+                    badgeClass = 'badge-danger'
+                } else if(priority == "Medium"){
+                    badgeClass = 'badge-warning'
+                } else {
+                    badgeClass = 'badge-success'
+                }
+
+                tasks.forEach(function(task, index){
+                    is_checked = task.is_task_completed? 'checked' : ''
+                    modalBody += "<div class='task-parent-div task-"+task.id+"'><input type='checkbox' id=is_completed_"+task.id+" class='is-completed-checkbox' "+
+                        is_checked+"><span>"+task.name+"</span>" +
+                        "<div class='float-right'>"+
+                            "<span class='badge "+badgeClass+"' style='padding: 7px'>"+priority+"</span>"+
+                            "<span style='padding: 7px'><a class='delete-task' data-task-id='"+task.id+"'><i class='fa fa-trash'></i></a></span>"+
+                        "</div>"+
+                        "</div>"
+                })
+            })
+
+            /*tasks.forEach(function(task, index){
                 is_checked = task.is_task_completed? 'checked' : ''
                 modalBody += "<div class='task-parent-div'><input type='checkbox' id=is_completed_"+task.id+" class='is-completed-checkbox' "+
                     is_checked+"><p>"+task.name+"</p></div>"
-            })
+            })*/
         } else {
             modalBody +="<div class='alert alert-light' role='alert'>No Task available for this project</div>"
         }
@@ -22,6 +46,14 @@ $(document).on("click", ".view-project-description", function () {
     })
 })
 
+$(document).on('click', ".delete-task", function(){
+    taskId = $(this).data('task-id')
+    commonAjaxFunction('/tasks/'+taskId, 'delete', '', function(response, status, xhr){
+        if(status == 'success'){
+            $('.task-'+taskId).remove()
+        }
+    })
+})
 //=================================================================================================
 //         This function is call when we click on Delete Button
 //=================================================================================================
@@ -42,11 +74,11 @@ $(document).on('click', '.destroy-task', function(){
 $('.btn-add-project').on('click', function(){
     var modalBody = "<div id='new-project-add-form'>" +
         "    <div class='form-group'>" +
-        "        <label for='project-name'><strong>Task Name</strong></label>" +
+        "        <label for='project-name'><strong>Project Name</strong></label>" +
         "        <input type='text' required class='form-control' id='project-name' placeholder='Enter Project Name'>" +
         "    </div>" +
         "    <div class='form-group'>" +
-        "        <label for='project-description'><strong>Description</strong></label>" +
+        "        <label for='project-description'><strong>Project Description</strong></label>" +
         "        <textarea class='form-control' id='project-description' placeholder='Enter Project Description'></textarea>" +
         "    </div>" +
         "    <button type='submit' class='btn btn-primary btn-add-project' id='submit-new-project' >Submit</button>" +
@@ -84,7 +116,43 @@ $('.edit-project').on('click', function(){
 //         This function is call when we click on Add New Task Option
 //=================================================================================================
 
+$('.new-task-addition').on('click', function(){
+    var projectID = $(this).data('project-id')
+    var modalBody = "<div id='new-project-add-form'>" +
+        "    <div class='form-group'>" +
+        "        <label for='task-name'><strong>Task Title</strong></label>" +
+        "        <input type='text' required class='form-control' id='task-name' placeholder='Enter Project Name'>" +
+        "    </div>" +
+        "    <div class='form-group'>" +
+        "        <label for='task-description'><strong>Task Description</strong></label>" +
+        "        <textarea class='form-control' id='task-description' placeholder='Enter Project Description'></textarea>" +
+        "    </div>"+
+        "<select class='form-control' name='task[priorities]' id='task_priority'>" +
+        "    <option value='Low'>Low</option>" +
+        "    <option value='Medium'>Medium</option>" +
+        "    <option value='High'>High</option>" +
+        "</select>"+
+        "<label for='task-date'><strong>Task Duration</strong></label>"+"<input type='date' id='task-date' name='birthday' class='form-control'>"+
+        "<button type='submit' class='btn btn-primary btn-add-project' id='submit-new-task' data-project-id='"+projectID+"' >Submit</button>" +
+        "</div>"
+    setContectToModal('Add Task', modalBody)
+})
 
+
+$(document).on('click', '#submit-new-task', function(){
+    var taskName = $('#task-name').val()
+    var taskDescription = $('#task-description').val()
+    var taskPriority = $('#task_priority').val()
+    var taskDate = $('#task-date').val()
+    var projectId = $(this).data('project-id')
+    if(taskName != "" && taskDescription != "" && taskDate != ""){
+        commonAjaxFunction('/tasks/', 'post', { taskName: taskName, taskDescription: taskDescription, projectId: projectId, taskPriority: taskPriority, taskDate: taskDate }, function(response, status, xhr){
+            if(status == "success"){
+                $("#common-modal").modal('hide')
+            }
+        })
+    }
+})
 //=================================================================================================
 //         This function is call when we click on submit button of new project form
 //=================================================================================================
@@ -160,7 +228,6 @@ $(document).on('change', 'input[class="is-completed-checkbox"]', function(){
     var taskId = $(this).attr('id').replace('is_completed_', '')
     var checkboxStatus = $(this).prop('checked')
     commonAjaxFunction('/tasks/'+taskId, 'patch', { checkboxStatus: checkboxStatus }, function(response, status, xhr){
-
     })
 })
 
