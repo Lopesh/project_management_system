@@ -1,6 +1,17 @@
 <div class="container mt-5">
-  <h2 class="text-white">Projects</h2>
-  <div class="row project-dashboard">
+
+  <% if can? :create, Project %>
+    <div class="row md-mb-2">
+      <div class="col-md-6">
+        <h2 class="text-white">Projects</h2>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-success btn-add-project" data-action='create' data-toggle="modal" data-target="#exampleModal"><strong>Add New Project</strong>  </button>
+      </div>
+    </div>
+
+  <% end %>
+  <div class="row project-dashboard mt-4">
     <% @projects.each do |project| %>
       <div class="card col-md-5  mt-1 card-override project-card-<%= project.id %>">
         <div class="card-body card-body-override  ">
@@ -10,7 +21,7 @@
             <div class="row">
               <% if can? :create, Task %>
                 <div class="col-md-3 text-center">
-                  <button class="btn btn-success new-task-addition" title="Add New Task" style="width: 100%">
+                  <button class="btn btn-success new-task-addition" data-project-id="<%= project.id %>" title="Add New Task" style="width: 100%">
                     <i class="fa fa-plus"></i>
                   </button>
                 </div>
@@ -42,13 +53,6 @@
       </div>
     <% end %>
   </div>
-  <% if can? :create, Project %>
-    <div class="row">
-      <div class="col-md-12">
-        <button type="button" class="btn btn-success btn-add-project" data-action='create' data-toggle="modal" data-target="#exampleModal"><strong>Add New Project</strong>  </button>
-      </div>
-    </div>
 
-  <% end %>
   <%= render "layouts/modal" %>
 </div>
