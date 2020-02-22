@@ -16,9 +16,6 @@
               <label for="inputLastName">Last Name</label>
             </div>
             <div class="form-label-group">
-              <%= f.select(:role, User.roles.keys.to_a, {}, { class: 'form-control' }) %>
-            </div>
-            <div class="form-label-group">
               <%= f.email_field :email, id: "emailSignUp", class: "form-control", placeholder: "Email", required: true %>
               <label for="emailSignUp">Email</label>
             </div>
@@ -32,11 +29,17 @@
               <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "confirmPassword", minlength: "6",  placeholder: "Last Name", required: true %>
               <label for="confirmPassword">Password</label>
             </div>
-
+            <div class="form-label-group">
+              <%= f.select(:role, User.roles.keys.to_a, {}, { class: 'form-control' }) %>
+            </div>
             <div class="actions">
-              <%= f.submit "Sign up" %>
+              <%= f.submit "Sign up", class: 'btn btn-lg btn-primary btn-block text-uppercase mb-2' %>
             </div>
           <% end %>
+          <h6 class="text-center">
+            OR
+          </h6>
+          <%= link_to 'Sign In', new_user_session_path, class: "btn btn-lg btn-primary btn-block text-uppercase mt-2" %>
         </div>
       </div>
     </div>

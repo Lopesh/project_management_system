@@ -20,28 +20,28 @@
           <div class="mt-md-3 mb-md-2">
             <div class="row">
               <% if can? :create, Task %>
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 col-6 mb-2 text-center">
                   <button class="btn btn-success new-task-addition" data-project-id="<%= project.id %>" title="Add New Task" style="width: 100%">
                     <i class="fa fa-plus"></i>
                   </button>
                 </div>
               <% end %>
               <% if can? :show, project %>
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 col-6 mb-2 text-center">
                   <button class="btn btn-warning view-project-description" data-project-id="<%= project.id %>"  title="View Project" style="width: 100%">
                     <i class="fa fa-eye"></i>
                   </button>
                 </div>
               <% end %>
               <% if can? :edit, project %>
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 col-6 mb-2 text-center">
                   <button class="btn btn-secondary edit-project" data-action='edit' data-project-id="<%= project.id %>" title="Delete Project" style="width: 100%">
                     <i class="fa fa-pencil"></i>
                   </button>
                 </div>
               <% end %>
               <% if can? :destroy, project %>
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 col-6 mb-2 text-center">
                   <button class="btn btn-danger destroy-task" data-project-id="<%= project.id %>" title="Delete Project" style="width: 100%">
                     <i class="fa fa-trash"></i>
                   </button>
